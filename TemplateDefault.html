@@ -1,0 +1,35 @@
+<!-- Template for Automatically Send Confirmation Emails from Google Forms. -->
+<!-- https://github.com/zinadesign/google-forms-email-sender -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      table { background-color: WhiteSmoke; padding: 7px 12px; border: 2px solid Gainsboro; }
+      td { padding: 3px; }
+    </style>
+  </head>
+  <body>
+
+    <p>Your response is received.</p>
+
+    <!-- User Response -->
+    <?!= responsesTable ?>
+
+    <p>
+      --<br>
+      <?= name ?><br>
+      <a href="mailto:<?= to ?>"><?= to ?></a>
+    </p>
+
+    <!-- Technical information -->
+    <? if (mailType != 'submitter') { ?>
+    <p>
+      <em>Form: <a href="<?= formURL ?>"><?= formTitle ?></a></em><br>
+      <!-- https://developers.google.com/apps-script/guides/services/quotas -->
+      <em>Remaining Daily Quota: <?= remainingDailyQuota ?> email recipients.</em>
+    </p>
+    <? } ?>
+
+  </body>
+</html>
