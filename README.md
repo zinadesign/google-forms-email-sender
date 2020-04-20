@@ -1,2 +1,3 @@
-# google-forms-email-sender
-Send Confirmation Emails from Google Forms
+# Google Forms Email Sender
+
+Automatically Send Confirmation Emails from Google Forms.
