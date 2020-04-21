@@ -53,7 +53,7 @@ Emails for fields **to**, **cc**, **bcc**, **replyTo** can be written in two for
 > `'user@domain.com'`<br>
 > `'User Name «Company» <user@domain.com>'`
 
-Multiple addresses are allowed, separated by commas:
+Multiple email addresses are allowed, separated by commas:
 
 > `'user@domain.com, info@example.com'`
 
