@@ -4,11 +4,11 @@ Automatically Send Confirmation Emails from Google Forms.
 
 ## Table of Content
 
-* [How To Install Email Sender to Google Form](#how-to-install-email-sender-to-google-form)
+* [Install Email Sender to Google Form](#install-email-sender-to-google-form)
 * [Configure Email Sender](#configure-email-sender)
 * [Quotas for Emails per day](#quotas-for-emails-per-day)
 
-## How To Install Email Sender to Google Form
+## Install Email Sender to Google Form
 
 1. Create a Google Form: https://docs.google.com/forms/
 2. Click **Menu** → **Script editor**:
