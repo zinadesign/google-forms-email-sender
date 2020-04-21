@@ -7,7 +7,7 @@ Automatically Send Confirmation Emails from Google Forms.
 1. Create a Google Form: https://docs.google.com/forms/
 2. Click **Menu** → **Script editor**:
 
-<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-1.png" width="500" alt="Google Forms Script Editor" style="border: 3px solid silver;"></p>
+<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-1.png" width="500" alt="Google Forms Script Editor" style="border: 3px solid #C0C0C0;"></p>
 
 3. Copy and paste code from [Code.gs](Code.gs).
 4. Create template file: **File** → **New** → **HTML file**, Enter new file name: `Template`.
