@@ -13,22 +13,22 @@ Automatically Send Confirmation Emails from Google Forms.
 1. Create a Google Form: https://docs.google.com/forms/
 2. Click **Menu** → **Script editor**:
 
-<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-1.png" width="600" alt="Google Forms Script Editor" class="border"></p>
+<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-1.png" width="681" alt="Google Forms Email Sender"></p>
 
 3. Copy and paste code from [Code.gs](Code.gs).
 4. Create template file: **File** → **New** → **HTML file**, Enter new file name: `Template`.
 5. Copy and paste code from [Template.html](Template.html).
 6. Run once function `installTriggers`: **Select function** → **installTriggers** → press **Play** button.
 
-<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-2.png" alt="Google Forms Script Editor" style="border: 3px solid silver;"></p>
+<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-2.png" alt="Google Forms Email Sender"></p>
 
 7. Allow permissions on next pop-ups:
 
-<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-3.png" width="500"  alt="Google Forms Script Editor" style="border: 3px solid silver;"></p>
+<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-3.png" width="500"  alt="Google Forms Email Sender"></p>
 
 8. Test Email Sender: go to your form, click **Preview** icon, fill form and submit, check your email box.
 
-<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-4.png" alt="Google Forms Script Editor" style="border: 3px solid silver;"></p>
+<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-4.png" alt="Google Forms Email Sender"></p>
 
 ## Configure Email Sender
 
