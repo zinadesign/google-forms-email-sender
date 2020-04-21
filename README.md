@@ -2,6 +2,12 @@
 
 Automatically Send Confirmation Emails from Google Forms.
 
+## Table of Content
+
+* [How To Install Email Sender to Google Form](#how-to-install-email-sender-to-google-form)
+* [Configure Email Sender](#configure-email-sender)
+* [Quotas for Emails per day](#quotas-for-emails-per-day)
+
 ## How To Install Email Sender to Google Form
 
 1. Create a Google Form: https://docs.google.com/forms/
@@ -63,9 +69,9 @@ Formats **dateFormat** according to specification described in [SimpleDateFormat
 
 The main text of the letter is edited in the **Template.html**.
 
-## Quotas for Email recipients per day
+## Quotas for Emails per day
 
-Keep in mind that each additional email address in the settings is an additional letter.
+Keep in mind that each additional email address in the settings is an additional Email recipient.
 
 Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on Email recipients per day:
 
