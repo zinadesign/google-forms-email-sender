@@ -5,8 +5,8 @@ Automatically Send Confirmation Emails from Google Forms.
 ## Table of Content
 
 * [Install Email Sender to Google Form](#install-email-sender-to-google-form)
-* [Configure Email Sender](#configure-email-sender)
 * [Quotas for Emails per day](#quotas-for-emails-per-day)
+* [Configure Email Sender](#configure-email-sender)
 
 ## Install Email Sender to Google Form
 
@@ -29,6 +29,17 @@ Automatically Send Confirmation Emails from Google Forms.
 8. Test Email Sender: go to your form, click **Preview** icon, fill form and submit, check your email box.
 
 <p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-4.png" alt="Google Forms Email Sender"></p>
+
+## Quotas for Emails per day
+
+Keep in mind that each additional email address in the settings is an additional email recipient.
+
+Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on email recipients per day:
+
+* Free edition (*@gmail.com) — 100 letters per day
+* G Suite — 1500 letters per day
+
+The size of the remaining daily quota is displayed in the bottom of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the **Template.html**.
 
 ## Configure Email Sender
 
@@ -68,14 +79,3 @@ A number **{{date}}{{quotaNumber}}** in the subject line is needed so that Gmail
 Formats **dateFormat** according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
 
 The main text of the letter is edited in the **Template.html**.
-
-## Quotas for Emails per day
-
-Keep in mind that each additional email address in the settings is an additional email recipient.
-
-Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on email recipients per day:
-
-* Free edition (*@gmail.com) — 100 letters per day
-* G Suite — 1500 letters per day
-
-The size of the remaining daily quota is displayed in the bottom of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the **Template.html**.
