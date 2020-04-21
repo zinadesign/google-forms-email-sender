@@ -7,7 +7,7 @@ Automatically Send Confirmation Emails from Google Forms.
 1. Create a Google Form: https://docs.google.com/forms/
 2. Click **Menu** → **Script editor**:
 
-<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-1.png" width="500" alt="Google Forms Script Editor" style="border: 3px solid silver;"></p>
+<p><img src="https://raw.githubusercontent.com/romychvk/google-forms-email-sender/master/doc/img/google-forms-email-sender-1.png" width="500" alt="Google Forms Script Editor" class="border"></p>
 
 3. Copy and paste code from [Code.gs](Code.gs).
 4. Create template file: **File** → **New** → **HTML file**, Enter new file name: `Template`.
@@ -26,7 +26,7 @@ Automatically Send Confirmation Emails from Google Forms.
 
 ## Configure Email Sender
 
-All settings are set in the main script [Code.gs](Code.gs):
+All settings are set in the main script `Code.gs`:
 
 ```javascript=
   var params = {
@@ -61,4 +61,15 @@ A number `{{date}}{{quotaNumber}}` in the subject line is needed so that Gmail d
 
 Formats `dateFormat` according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
 
-The main text of the letter is edited in the [Template.html](Template.html).
+The main text of the letter is edited in the `Template.html`.
+
+## Quotas for Email recipients per day
+
+Keep in mind that each additional email address in the settings is an additional letter.
+
+Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on Email recipients per day:
+
+* free edition (*@gmail.com) — 100/day
+* G Suite — 1500/day
+
+The size of the remaining daily quota is displayed in the text of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the `Template.html`.
