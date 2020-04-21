@@ -26,9 +26,9 @@ Automatically Send Confirmation Emails from Google Forms.
 
 ## Configure Email Sender
 
-All settings are set in the main script `Code.gs`:
+All settings are set in the main script **Code.gs**:
 
-```javascript=
+```javascript
   var params = {
     to: '', // Primary (visible) recipient address. 
     cc: '', // Visible copies.
@@ -42,7 +42,7 @@ All settings are set in the main script `Code.gs`:
   };
 ```
 
-Emails for fields `to`, `cc`, `bcc`, `replyTo` can be written in two forms:
+Emails for fields **to**, **cc**, **bcc**, **replyTo** can be written in two forms:
 
 > `'user@domain.com'`<br>
 > `'User Name «Company» <user@domain.com>'`
@@ -51,17 +51,17 @@ Multiple addresses are allowed, separated by commas:
 
 > `'user@domain.com, info@example.com'`
 
-If the `to` field is empty, the letter will be sent to the email address of the form owner.
+If the **to** field is empty, the letter will be sent to the email address of the form owner.
 
-Similarly if the `replyTo` field is empty, if the user decides to respond to the letter, the email of the owner of the form will be substituted as the recipient.
+Similarly if the **replyTo** field is empty, if the user decides to respond to the letter, the email of the owner of the form will be substituted as the recipient.
 
-If `subject` field is empty, it will be substituted a form heading.
+If **subject** field is empty, it will be substituted a form heading.
 
-A number `{{date}}{{quotaNumber}}` in the subject line is needed so that Gmail does not group letters in chains.
+A number **{{date}}{{quotaNumber}}** in the subject line is needed so that Gmail does not group letters in chains.
 
-Formats `dateFormat` according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
+Formats **dateFormat** according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
 
-The main text of the letter is edited in the `Template.html`.
+The main text of the letter is edited in the **Template.html**.
 
 ## Quotas for Email recipients per day
 
@@ -69,7 +69,7 @@ Keep in mind that each additional email address in the settings is an additional
 
 Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on Email recipients per day:
 
-* free edition (*@gmail.com) — 100/day
-* G Suite — 1500/day
+* Free edition (*@gmail.com) — 100 letters per day
+* G Suite — 1500 letters per day
 
-The size of the remaining daily quota is displayed in the text of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the `Template.html`.
+The size of the remaining daily quota is displayed in the text of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the **Template.html**.
