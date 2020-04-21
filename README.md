@@ -26,7 +26,7 @@ Automatically Send Confirmation Emails from Google Forms.
 
 ## Configure Email Sender
 
-All settings are set in the main script [Code.gs](Code.gs):
+All settings are set in the main script `Code.gs`:
 
 ```javascript=
   var params = {
@@ -61,4 +61,4 @@ A number `{{date}}{{quotaNumber}}` in the subject line is needed so that Gmail d
 
 Formats `dateFormat` according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
 
-The main text of the letter is edited in the [Template.html](Template.html).
+The main text of the letter is edited in the `Template.html`.
