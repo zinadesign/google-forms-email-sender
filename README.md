@@ -71,11 +71,11 @@ The main text of the letter is edited in the **Template.html**.
 
 ## Quotas for Emails per day
 
-Keep in mind that each additional email address in the settings is an additional Email recipient.
+Keep in mind that each additional email address in the settings is an additional email recipient.
 
-Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on Email recipients per day:
+Google Apps Script services impose [daily quotas](https://developers.google.com/apps-script/guides/services/quotas) on email recipients per day:
 
 * Free edition (*@gmail.com) — 100 letters per day
 * G Suite — 1500 letters per day
 
-The size of the remaining daily quota is displayed in the text of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the **Template.html**.
+The size of the remaining daily quota is displayed in the bottom of the letter to the form owner — see `<?= remainingDailyQuota ?>` in the **Template.html**.
