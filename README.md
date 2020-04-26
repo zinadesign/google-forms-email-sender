@@ -1,6 +1,6 @@
 # Google Forms Email Sender
 
-Automatically Send Confirmation Emails from Google Forms.
+Simple Google Apps Script for automatically send confirmation emails from Google Forms.
 
 ## Table of Content
 
