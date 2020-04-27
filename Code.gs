@@ -13,6 +13,7 @@ function onFormSubmit() {
     dateFormat: 'Md', // Date format for {{date}}
     template: 'Template.html', // Email body template.
     emailFieldKeyword: 'email', // If a custom email field is used
+    hiddenFieldsKeyword: '(hidden)', // Fields in the name of which this keyword is present are not shown in the letter to the submitter
 };
 
   // 1. Get all the necessary information from the form params and the data of the last form response:
@@ -95,7 +96,7 @@ function sendMail(params) {
   var subject = generateSubject(params.subject,params.timezone,params.dateFormat,params.remainingDailyQuota,params.formTitle);
   // Generate email Body from the template
   var mailTemplate = HtmlService.createTemplateFromFile(params.template);
-  var htmlBody = generateHtmlBody(params.mailType,mailTemplate,to,params.submitterEmail,params.name,params.itemResponses,params.remainingDailyQuota,params.formTitle,params.formURL);
+  var htmlBody = generateHtmlBody(params.mailType,mailTemplate,to,params.submitterEmail,params.name,params.hiddenFieldsKeyword,params.itemResponses,params.remainingDailyQuota,params.formTitle,params.formURL);
   // Send a letter
   MailApp.sendEmail({ to: to, cc: cc, bcc: bcc, replyTo: replyTo, name: name, subject: subject, htmlBody: htmlBody });
 }
@@ -115,7 +116,7 @@ function generateSubject(subject,timezone,dateFormat,remainingDailyQuota,formTit
 }
 
 // Generate email Body from the template
-function generateHtmlBody(mailType,template,to,submitterEmail,name,itemResponses,remainingDailyQuota,formTitle,formURL) {
+function generateHtmlBody(mailType,template,to,submitterEmail,name,hiddenFieldsKeyword,itemResponses,remainingDailyQuota,formTitle,formURL) {
   template.mailType = mailType;
   template.to = to;
   template.submitterEmail = submitterEmail;
@@ -123,45 +124,86 @@ function generateHtmlBody(mailType,template,to,submitterEmail,name,itemResponses
   template.remainingDailyQuota = remainingDailyQuota;
   template.formTitle = formTitle;
   template.formURL = formURL;
-  template.responsesTable = generateResponsesTable(itemResponses, submitterEmail); // user response in table format
-  template.responsesList = generateResponsesList(itemResponses, submitterEmail); // user response in list format
+  template.responsesTable = generateResponsesTable(itemResponses, submitterEmail,hiddenFieldsKeyword); // user response in table format
+  template.responsesList = generateResponsesList(itemResponses, submitterEmail,hiddenFieldsKeyword); // user response in list format
+  if (hiddenFieldsKeyword !== '') {
+    template.hiddenTable = generateHiddenFieldsTable(itemResponses, hiddenFieldsKeyword); // hidden fields values in table format
+    template.hiddenList = generateHiddenFieldsList(itemResponses, hiddenFieldsKeyword); // hidden fields values in list format
+  }
   var htmlBody = template.evaluate().getContent();
   return htmlBody;
 }
 
 // List of questions and answers in Table format:
-function generateResponsesTable(itemResponses, submitterEmail) {
+function generateResponsesTable(itemResponses, submitterEmail,hiddenFieldsKeyword) {
   var responsesTable = '<table>\n';
-  for (var t = 0; t < itemResponses.length; t++) {
-    var responseTitle = itemResponses[t].getItem().getTitle();
-    var responseText = itemResponses[t].getResponse().toString();
-    if (responseText == '') { responseText = '—'; }
-    responsesTable += ''
-    + '<tr>\n'
-    + '  <td><strong>' + responseTitle + '</strong></td>\n'
-    + '  <td>' + responseText + '</td>\n'
-    + '</tr>\n';
-  };
-  if (submitterEmail != undefined && submitterEmail != '') {
+  if (submitterEmail !== undefined && submitterEmail !== '') {
     responsesTable += ''
     + '<tr>\n'
     + '  <td><strong>Ваш E-mail</strong></td>\n'
     + '  <td>' + submitterEmail + '</td>\n'
     + '</tr>\n';
   }
+  for (var t = 0; t < itemResponses.length; t++) {
+    var responseTitle = itemResponses[t].getItem().getTitle();
+    if (hiddenFieldsKeyword !== '' && !responseTitle.includes(hiddenFieldsKeyword)) {
+      var responseText = itemResponses[t].getResponse().toString();
+      if (responseText == '') { responseText = '—'; }
+      responsesTable += ''
+      + '<tr>\n'
+      + '  <td><strong>' + responseTitle + '</strong></td>\n'
+      + '  <td>' + responseText + '</td>\n'
+      + '</tr>\n';
+    }
+  }
   responsesTable += '</table>\n';
   return responsesTable;
 }
 
 // List of questions and answers in List format:
-function generateResponsesList(itemResponses, submitterEmail) {
+function generateResponsesList(itemResponses, submitterEmail,hiddenFieldsKeyword) {
   var responsesList = '<ul>\n';
-  for (var l = 0; l < itemResponses.length; l++) {
-    responsesList += '  <li><strong>' + itemResponses[l].getItem().getTitle() + '</strong> — ' + itemResponses[l].getResponse().toString() + '</li>\n';
-  };
-  if (submitterEmail != undefined && submitterEmail != '') {
+  if (submitterEmail !== undefined && submitterEmail !== '') {
     responsesList += '  <li><strong>Ваш E-mail</strong> — ' + submitterEmail + '</li>\n';
+  }
+  for (var l = 0; l < itemResponses.length; l++) {
+    var responseTitle = itemResponses[l].getItem().getTitle();
+    if (hiddenFieldsKeyword !== '' && !responseTitle.includes(hiddenFieldsKeyword)) {
+      responsesList += '  <li><strong>' + responseTitle + '</strong> — ' + itemResponses[l].getResponse().toString() + '</li>\n';
+    }
   }
   responsesList += '</ul>\n';
   return responsesList;
+}
+
+// List of hidden fields in Table format
+function generateHiddenFieldsTable(itemResponses,hiddenFieldsKeyword) {
+  var hiddenTable = '<table>\n';
+  for (var t = 0; t < itemResponses.length; t++) {
+    var responseTitle = itemResponses[t].getItem().getTitle();
+    if (responseTitle.includes(hiddenFieldsKeyword)) {
+      var responseText = itemResponses[t].getResponse().toString();
+      if (responseText == '') { responseText = '—'; }
+      hiddenTable += ''
+      + '<tr>\n'
+      + '  <td><strong>' + responseTitle + '</strong></td>\n'
+      + '  <td>' + responseText + '</td>\n'
+      + '</tr>\n';
+    }
+  };
+  hiddenTable += '</table>\n';
+  return hiddenTable;
+}
+
+// List of hidden fields in List format
+function generateHiddenFieldsList(itemResponses,hiddenFieldsKeyword) {
+  var hiddenList = '<ul>\n';
+  for (var l = 0; l < itemResponses.length; l++) {
+    var responseTitle = itemResponses[l].getItem().getTitle();
+    if (responseTitle.includes(hiddenFieldsKeyword)) {
+      hiddenList += '  <li><strong>' + responseTitle + '</strong> — ' + itemResponses[l].getResponse().toString() + '</li>\n';
+    }
+  }
+  hiddenList += '</ul>\n';
+  return hiddenList;
 }
