@@ -12,7 +12,8 @@ function onFormSubmit() {
     timezone: 'GMT+3',
     dateFormat: 'Md', // Date format for {{date}}
     template: 'Template.html', // Email body template.
-  };
+    emailFieldKeyword: 'email', // If a custom email field is used
+};
 
   // 1. Get all the necessary information from the form params and the data of the last form response:
   getInfo(params);
@@ -41,8 +42,29 @@ function getInfo(params) {
   var formResponses = form.getResponses(); // List of all entries in the form
   var lastResponse = formResponses[formResponses.length - 1]; // Select the last entry in the form
   params.itemResponses = lastResponse.getItemResponses(); // Get an array with questions and answers
-  params.submitterEmail = lastResponse.getRespondentEmail(); // We will receive the sender's e-mail - if the email collection field is enabled
+  params.submitterEmail = getSubmitterEmail(lastResponse,params.emailFieldKeyword); // Get submitter email
   return params;
+}
+
+function getSubmitterEmail(lastResponse,emailFieldKeyword) {
+  // If the "Collect email addresses" option is enabled:
+  var submitterEmail = lastResponse.getRespondentEmail();
+  if (submitterEmail != '') {
+    return submitterEmail;
+  } else {
+    // Check, if a custom email field is used
+    if (emailFieldKeyword != '') {
+      // Find the email field
+      var itemResponses = lastResponse.getItemResponses(); // Get an array with questions and answers
+      for (var t = 0; t < itemResponses.length; t++) {
+        var responseTitle = itemResponses[t].getItem().getTitle();
+        if (responseTitle.search(new RegExp(emailFieldKeyword, "i")) !== -1) {
+          var responseText = itemResponses[t].getResponse().toString();
+          return responseText;
+        }
+      }
+    }
+  }
 }
 
 function sendMail(params) {
