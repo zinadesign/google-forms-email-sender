@@ -12,6 +12,7 @@ function onFormSubmit() {
     timezone: 'GMT+3',
     dateFormat: 'Md', // Date format for {{date}}
     template: 'Template.html', // Email body template.
+    showEmptyFields: true, // Display in email fields that the user did not fill out
     emailFieldKeyword: 'email', // If a custom email field is used
     hiddenFieldsKeyword: '(hidden)', // Fields in the name of which this keyword is present are not shown in the letter to the submitter
 };
@@ -116,7 +117,7 @@ function generateSubject(subject,timezone,dateFormat,remainingDailyQuota,formTit
 }
 
 // Generate email Body from the template
-function generateHtmlBody(mailType,template,to,submitterEmail,name,hiddenFieldsKeyword,itemResponses,remainingDailyQuota,formTitle,formURL) {
+function generateHtmlBody(mailType,template,to,submitterEmail,name,showEmptyFields,hiddenFieldsKeyword,itemResponses,remainingDailyQuota,formTitle,formURL) {
   template.mailType = mailType;
   template.to = to;
   template.submitterEmail = submitterEmail;
@@ -124,8 +125,8 @@ function generateHtmlBody(mailType,template,to,submitterEmail,name,hiddenFieldsK
   template.remainingDailyQuota = remainingDailyQuota;
   template.formTitle = formTitle;
   template.formURL = formURL;
-  template.responsesTable = generateResponsesTable(itemResponses, submitterEmail,hiddenFieldsKeyword); // user response in table format
-  template.responsesList = generateResponsesList(itemResponses, submitterEmail,hiddenFieldsKeyword); // user response in list format
+  template.responsesTable = generateResponsesTable(itemResponses,submitterEmail,showEmptyFields,hiddenFieldsKeyword); // user response in table format
+  template.responsesList = generateResponsesList(itemResponses,submitterEmail,showEmptyFields,hiddenFieldsKeyword); // user response in list format
   if (hiddenFieldsKeyword !== '') {
     template.hiddenTable = generateHiddenFieldsTable(itemResponses, hiddenFieldsKeyword); // hidden fields values in table format
     template.hiddenList = generateHiddenFieldsList(itemResponses, hiddenFieldsKeyword); // hidden fields values in list format
@@ -135,7 +136,7 @@ function generateHtmlBody(mailType,template,to,submitterEmail,name,hiddenFieldsK
 }
 
 // List of questions and answers in Table format:
-function generateResponsesTable(itemResponses, submitterEmail,hiddenFieldsKeyword) {
+function generateResponsesTable(itemResponses,submitterEmail,showEmptyFields,hiddenFieldsKeyword) {
   var responsesTable = '<table>\n';
   if (submitterEmail !== undefined && submitterEmail !== '') {
     responsesTable += ''
@@ -148,7 +149,13 @@ function generateResponsesTable(itemResponses, submitterEmail,hiddenFieldsKeywor
     var responseTitle = itemResponses[t].getItem().getTitle();
     if (hiddenFieldsKeyword !== '' && !responseTitle.includes(hiddenFieldsKeyword)) {
       var responseText = itemResponses[t].getResponse().toString();
-      if (responseText == '') { responseText = '—'; }
+      if (responseText == '') {
+        if (showEmptyFields == true) {
+          responseText = '—';
+        } else {
+          continue;
+        }
+      }
       responsesTable += ''
       + '<tr>\n'
       + '  <td><strong>' + responseTitle + '</strong></td>\n'
@@ -161,7 +168,7 @@ function generateResponsesTable(itemResponses, submitterEmail,hiddenFieldsKeywor
 }
 
 // List of questions and answers in List format:
-function generateResponsesList(itemResponses, submitterEmail,hiddenFieldsKeyword) {
+function generateResponsesList(itemResponses, submitterEmail,showEmptyFields,hiddenFieldsKeyword) {
   var responsesList = '<ul>\n';
   if (submitterEmail !== undefined && submitterEmail !== '') {
     responsesList += '  <li><strong>Ваш E-mail</strong> — ' + submitterEmail + '</li>\n';
@@ -169,6 +176,14 @@ function generateResponsesList(itemResponses, submitterEmail,hiddenFieldsKeyword
   for (var l = 0; l < itemResponses.length; l++) {
     var responseTitle = itemResponses[l].getItem().getTitle();
     if (hiddenFieldsKeyword !== '' && !responseTitle.includes(hiddenFieldsKeyword)) {
+      var responseText = itemResponses[l].getResponse().toString();
+      if (responseText == '') {
+        if (showEmptyFields == true) {
+          responseText = '—';
+        } else {
+          continue;
+        }
+      }
       responsesList += '  <li><strong>' + responseTitle + '</strong> — ' + itemResponses[l].getResponse().toString() + '</li>\n';
     }
   }
