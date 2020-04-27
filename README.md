@@ -47,7 +47,7 @@ All settings are set in the main script **Code.gs**:
 
 ```javascript
   var params = {
-    to: '', // Primary (visible) recipient address. 
+    to: '', // Primary (visible) recipient address.
     cc: '', // Visible copies.
     bcc: '', // Hidden copies.
     replyTo: '', // Email for reply from user.
@@ -79,3 +79,5 @@ A number **{{date}}{{quotaNumber}}** in the subject line is needed so that Gmail
 Formats **dateFormat** according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
 
 The main text of the letter is edited in the **Template.html**.
+
+The **emailFieldKeyword** parameter allows you to use the email submitter from a custom field, and not just from the "Collect email addresses" option. Here you need to specify the keyword that is present in the name of your custom email field in the form. Case insensitive.
