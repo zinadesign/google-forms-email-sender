@@ -17,7 +17,7 @@ function onFormSubmit() {
     skipEmptyFields: true, // Skip in letter empty fields
   };
 
-  // 1. Get all the necessary information from the form params and the data of the last form response:
+  // 1. Get information from the form parameters and the last form response:
   getInfo(params);
 
   // 2. Send an email to the Owner of the form:
@@ -123,7 +123,6 @@ function generateHtmlBody(params,template,to) {
 
 // Table of questions and answers:
 function generateResponsesTable(itemResponses,submitterEmail,collectEmailAddresses,skipEmptyFields,hiddenFieldsKeyword) {
-  Logger.log('1');
   var responsesTable = '<table>\n';
   if (collectEmailAddresses == true && submitterEmail !== undefined && submitterEmail !== '') {
     responsesTable += ''
@@ -145,7 +144,6 @@ function generateResponsesTable(itemResponses,submitterEmail,collectEmailAddress
     + '</tr>\n';
   }
   responsesTable += '</table>\n';
-  Logger.log('responsesTable: '+responsesTable);
   return responsesTable;
 }
 
@@ -175,6 +173,7 @@ function generateHiddenFieldsTable(itemResponses,hiddenFieldsKeyword) {
     for (var t = 0; t < itemResponses.length; t++) {
       var responseTitle = itemResponses[t].getItem().getTitle();
       if (responseTitle.includes(hiddenFieldsKeyword)) {
+        responseTitle = responseTitle.replace(hiddenFieldsKeyword, ''); // remove hidden keyword
         var responseText = itemResponses[t].getResponse().toString();
         if (responseText == '') { responseText = '—'; }
         hiddenTable += ''
@@ -198,6 +197,7 @@ function generateHiddenFieldsList(itemResponses,hiddenFieldsKeyword) {
     for (var l = 0; l < itemResponses.length; l++) {
       var responseTitle = itemResponses[l].getItem().getTitle();
       if (responseTitle.includes(hiddenFieldsKeyword)) {
+        responseTitle = responseTitle.replace(hiddenFieldsKeyword, ''); // remove hidden keyword
         hiddenList += '<li><strong>' + responseTitle + '</strong> — ' + itemResponses[l].getResponse().toString() + '</li>\n';
       }
     }
