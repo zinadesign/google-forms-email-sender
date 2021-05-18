@@ -2,7 +2,7 @@
 
 Simple Google Apps Script for automatically send confirmation emails from Google Forms.
 
-## Table of Content
+## Content Table
 
 * [Install Email Sender to Google Form](#install-email-sender-to-google-form)
 * [Quotas for Emails per day](#quotas-for-emails-per-day)
@@ -70,12 +70,12 @@ Multiple email addresses are allowed, separated by commas:
 
 If the **to** field is empty, the letter will be sent to the email address of the form owner.
 
-Similarly if the **replyTo** field is empty, if the user decides to respond to the letter, the email of the owner of the form will be substituted as the recipient.
+Similarly if the **replyTo** field is empty, if the user decides to respond to the letter, the form owner email will be substituted as the recipient.
 
-If **subject** field is empty, it will be substituted a form heading.
+If the **subject** field is empty, it will be substituted a form heading.
 
 A number **{{date}}{{quotaNumber}}** in the subject line is needed so that Gmail does not group letters in chains.
 
-Formats **dateFormat** according to specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
+Formats **dateFormat** according to the specification described in [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
 
 The main text of the letter is edited in the **Template.html**.
