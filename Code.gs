@@ -107,7 +107,7 @@ function generateHtmlBody(mailType,template,to,submitterEmail,name,itemResponses
   return htmlBody;
 }
 
-// List of questions and answers in Table format:
+// Questions and answers list in a Table format:
 function generateResponsesTable(itemResponses, submitterEmail) {
   var responsesTable = '<table>\n';
   for (var t = 0; t < itemResponses.length; t++) {
@@ -131,7 +131,7 @@ function generateResponsesTable(itemResponses, submitterEmail) {
   return responsesTable;
 }
 
-// List of questions and answers in List format:
+// Questions and answers list in a List format:
 function generateResponsesList(itemResponses, submitterEmail) {
   var responsesList = '<ul>\n';
   for (var l = 0; l < itemResponses.length; l++) {
