@@ -7,17 +7,17 @@ function onFormSubmit() {
     cc: '', // Visible copies.
     bcc: '', // Hidden copies.
     replyTo: '', // Email for reply from user.
-    name: '', // Name of company or site.
+    name: '', // Company or site name.
     subject: '{{formTitle}} — Request #{{date}}{{quotaNumber}}',
     timezone: 'GMT+3',
     dateFormat: 'Md', // Date format for {{date}}
     template: 'Template.html', // Email body template.
   };
 
-  // 1. Get all the necessary information from the form params and the data of the last form response:
+  // 1. Get all the necessary information from the form params and the last form response data:
   getInfo(params);
 
-  // 2. Send an email to the Owner of the form:
+  // 2. Send an email to the form Owner:
   params.mailType = 'owner';
   sendMail(params);
 
@@ -26,18 +26,18 @@ function onFormSubmit() {
   sendMail(params);
 }
 
-// Trigger installation: run once before the first test of the form.
+// Trigger installation: run once before the form first test.
 function installTriggers() {
   ScriptApp.newTrigger('onFormSubmit').forForm(FormApp.getActiveForm()).onFormSubmit().create();
 };
 
-// Get all the necessary information from the form params and the data of the last form response
+// Get all the necessary information from the form params and the last form response data
 function getInfo(params) {
   params.remainingDailyQuota = MailApp.getRemainingDailyQuota() - 1;
   var form = FormApp.getActiveForm();
   params.formURL = form.getPublishedUrl(); // Form URL
   params.formTitle = form.getTitle(); // Form header
-  params.formEmail = Session.getEffectiveUser().getEmail(); // Form owner email
+  params.formEmail = Session.getEffectiveUser().getEmail(); // Form email owner 
   var formResponses = form.getResponses(); // List of all entries in the form
   var lastResponse = formResponses[formResponses.length - 1]; // Select the last entry in the form
   params.itemResponses = lastResponse.getItemResponses(); // Get an array with questions and answers
@@ -101,13 +101,13 @@ function generateHtmlBody(mailType,template,to,submitterEmail,name,itemResponses
   template.remainingDailyQuota = remainingDailyQuota;
   template.formTitle = formTitle;
   template.formURL = formURL;
-  template.responsesTable = generateResponsesTable(itemResponses, submitterEmail); // user response in table format
-  template.responsesList = generateResponsesList(itemResponses, submitterEmail); // user response in list format
+  template.responsesTable = generateResponsesTable(itemResponses, submitterEmail); // user response in a table format
+  template.responsesList = generateResponsesList(itemResponses, submitterEmail); // user response in a list format
   var htmlBody = template.evaluate().getContent();
   return htmlBody;
 }
 
-// List of questions and answers in Table format:
+// Questions and answers list in the Table format:
 function generateResponsesTable(itemResponses, submitterEmail) {
   var responsesTable = '<table>\n';
   for (var t = 0; t < itemResponses.length; t++) {
@@ -131,7 +131,7 @@ function generateResponsesTable(itemResponses, submitterEmail) {
   return responsesTable;
 }
 
-// List of questions and answers in List format:
+// Questions and answers list in the List format:
 function generateResponsesList(itemResponses, submitterEmail) {
   var responsesList = '<ul>\n';
   for (var l = 0; l < itemResponses.length; l++) {
